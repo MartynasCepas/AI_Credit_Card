@@ -5,7 +5,7 @@ h2o.init()
 
 h2o.ls()
 
-df = h2o.import_file("data.csv")
+df = h2o.import_file("./data/data.csv")
 colmeans = df.mean()
 
 print(colmeans)
