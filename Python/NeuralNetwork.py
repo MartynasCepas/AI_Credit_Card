@@ -3,7 +3,7 @@ from h2o.estimators import H2ODeepLearningEstimator
 h2o.init(nthreads = -1)
 
 # Import the insurance dataset into H2O:
-credit = h2o.import_file("./data/data.csv")
+credit = h2o.import_file("./data/data_updated.csv")
 
 r = credit[0].runif()
 
@@ -16,13 +16,13 @@ valid = credit[ (0.6 <= r) & (r < 0.9) ]
 # split out 10% for testing
 test = credit[ 0.9 <= r ]
 
-predictors = ["LIMIT_BAL", "EDUCATION", "AGE"]
-response = "default payment next month"
+predictors = ["LIMIT_BAL", "EDUCATION", "AGE", "PAY_MEAN","PAY_AMT_MEAN","PAY_DIFF"]
+response = "default.payment.next.month"
 ignored = ["ID"]
 
 # Build and train the model:
 dl = H2ODeepLearningEstimator(distribution="tweedie",
-                               hidden=[1],
+                               hidden=[10],
                           #     ignored_columns = ignored,
                                epochs=1000,
                                adaptive_rate=True,

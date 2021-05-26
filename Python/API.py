@@ -9,7 +9,7 @@ api = Api(app)
 h2o.init()
 
 ## load saved model
-model_path = './models/DeepLearning_model_python_1621975426439_1'
+model_path = './Python/models/DeepLearning_model_FINAL'
 uploaded_model = h2o.load_model(model_path)
 
 # argument parsing
@@ -17,12 +17,18 @@ parser = reqparse.RequestParser(bundle_errors=True) #if there are 2 errors, both
 parser.add_argument('LIMIT_BAL')
 parser.add_argument('EDUCATION')
 parser.add_argument('AGE')
+parser.add_argument('PAY_MEAN')
+parser.add_argument('PAY_AMT_MEAN')
+parser.add_argument('PAY_DIFF')
 
 #Categorical Columns - enum
 #Numerical Columns - real
 col_dict = {'LIMIT_BAL' : 'real',
             'EDUCATION' : 'real',
-            'AGE' : 'real'}
+            'AGE' : 'real',
+            'PAY_MEAN': 'real',
+            'PAY_AMT_MEAN':'real',
+            'PAY_DIFF':'real'}
 
 #prepare empty test data frame to be fed to the model
 data = {}
@@ -37,6 +43,9 @@ class CreditPredict(Resource):
         limit_bal = int(args['LIMIT_BAL'])
         education = int(args['EDUCATION'])
         age = int(args['AGE'])
+        pay_mean = float(args['PAY_MEAN'])
+        pay_amt_mean = float(args['PAY_AMT_MEAN'])
+        pay_diff = float(args['PAY_DIFF'])
 
         application_outcome = 'declined'
 
@@ -44,6 +53,9 @@ class CreditPredict(Resource):
         data['LIMIT_BAL'] = limit_bal
         data['EDUCATION'] = education
         data['AGE'] = age
+        data['PAY_MEAN'] = pay_mean
+        data['PAY_AMT_MEAN'] = pay_amt_mean
+        data['PAY_DIFF'] = pay_diff
 
         data['application_outcome'] = application_outcome
 

@@ -293,6 +293,7 @@ paket-files/
 
 # JetBrains Rider
 .idea/
+venv/
 *.sln.iml
 
 # CodeRush personal settings
